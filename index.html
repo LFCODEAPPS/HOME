@@ -64,6 +64,7 @@
       color: var(--text-main);
       overflow-x: hidden;
       padding: 20px 24px;
+      position: relative;
     }
 
     @keyframes gradientShift {
@@ -79,6 +80,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 4px 12px;
+      z-index: 10;
     }
 
     .date-display {
@@ -117,25 +119,25 @@
       fill: currentColor;
     }
 
-    /* CONTENEDOR PRINCIPAL CON COLUMNA DERECHA */
+    /* ESTRUCTURA PRINCIPAL CON CENTRADO ABSOLUTO */
     .app-layout {
       width: 100%;
-      max-width: 1100px;
+      flex: 1;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 40px;
-      margin: auto 0;
+      justify-content: center;
+      position: relative;
     }
 
-    /* SECCIÓN CENTRAL */
+    /* CONTENIDO CENTRAL (SIEMPRE EN EL CENTRO) */
     main {
-      flex: 1;
+      width: 100%;
+      max-width: 680px;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 32px;
-      max-width: 720px;
+      z-index: 2;
     }
 
     /* RELOJ Y SALUDO */
@@ -257,9 +259,11 @@
       white-space: nowrap;
     }
 
-    /* COLUMNA LATERAL DERECHA (HERRAMIENTAS DE IA) */
+    /* COLUMNA DE IA AL BORDE DERECHO (POSICIONAMIENTO ABSOLUTO) */
     .ai-sidebar {
-      width: 180px;
+      position: absolute;
+      right: 12px;
+      width: 170px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -270,6 +274,7 @@
       backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
       box-shadow: var(--shadow-mac);
+      z-index: 5;
     }
 
     .ai-sidebar-title {
@@ -286,7 +291,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
-      padding: 9px 12px;
+      padding: 8px 12px;
       border-radius: 12px;
       font-size: 0.85rem;
       font-weight: 500;
@@ -298,7 +303,7 @@
 
     .ai-chip:hover {
       background: var(--glass-hover);
-      transform: translateX(3px);
+      transform: translateX(-3px);
     }
 
     .ai-chip span {
@@ -453,17 +458,19 @@
     footer {
       font-size: 0.75rem;
       color: var(--text-subtle);
+      z-index: 10;
     }
 
     /* ADAPTACIÓN PANTALLAS PEQUEÑAS */
-    @media (max-width: 820px) {
+    @media (max-width: 1024px) {
       .app-layout {
         flex-direction: column;
-        gap: 30px;
+        gap: 24px;
       }
       .ai-sidebar {
+        position: static;
         width: 100%;
-        max-width: 720px;
+        max-width: 680px;
         flex-direction: row;
         overflow-x: auto;
       }
@@ -487,7 +494,7 @@
 
   <!-- ESTRUCTURA PRINCIPAL -->
   <div class="app-layout">
-    <!-- CONTENIDO CENTRAL -->
+    <!-- CONTENIDO CENTRAL (SIEMPRE CENTRADO) -->
     <main>
       <div class="clock-container">
         <div class="clock" id="clock">00:00</div>
@@ -511,7 +518,7 @@
       <div class="favorites-grid" id="favoritesGrid"></div>
     </main>
 
-    <!-- COLUMNA LATERAL DERECHA (IA) -->
+    <!-- COLUMNA LATERAL DERECHA EN EL BORDE -->
     <aside class="ai-sidebar">
       <div class="ai-sidebar-title">Modelos IA</div>
       <div id="aiSidebarList" style="display: flex; flex-direction: column; gap: 4px; width: 100%;"></div>
@@ -593,7 +600,7 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // RENDERIZAR IA (COLUMNA DERECHA)
+    // RENDERIZAR IA
     function renderAiBar() {
       const aiList = document.getElementById('aiSidebarList');
       const modalAiList = document.getElementById('modalAiList');
@@ -602,14 +609,12 @@
       modalAiList.innerHTML = '';
 
       aiTools.forEach((ai, index) => {
-        // Opción columna
         const chip = document.createElement('a');
         chip.className = 'ai-chip';
         chip.href = ai.url;
         chip.innerHTML = `<span>${ai.symbol || '✦'}</span> ${ai.name}`;
         aiList.appendChild(chip);
 
-        // Modal
         const item = document.createElement('div');
         item.className = 'modal-fav-item';
         item.innerHTML = `
