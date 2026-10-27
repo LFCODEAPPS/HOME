@@ -22,6 +22,7 @@
       --shadow-mac: 0 20px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px var(--glass-border);
       --accent-color: #007aff;
       --accent-hover: #0062cc;
+      --drive-accent: #34a853;
     }
 
     /* ADAPTACIÓN A MODO CLARO (macOS LIGHT) */
@@ -63,7 +64,7 @@
       animation: gradientShift 16s ease infinite alternate;
       color: var(--text-main);
       overflow-x: hidden;
-      padding: 20px 24px;
+      padding: 16px 24px;
       position: relative;
     }
 
@@ -119,24 +120,25 @@
       fill: currentColor;
     }
 
-    /* ESTRUCTURA PRINCIPAL CON CENTRADO ABSOLUTO */
+    /* ESTRUCTURA PRINCIPAL */
     .app-layout {
       width: 100%;
       flex: 1;
       display: flex;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       position: relative;
+      padding-top: 25px;
     }
 
-    /* CONTENIDO CENTRAL (SIEMPRE EN EL CENTRO) */
+    /* CONTENEDOR CENTRAL */
     main {
       width: 100%;
       max-width: 680px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 32px;
+      gap: 24px;
       z-index: 2;
     }
 
@@ -146,7 +148,7 @@
     }
 
     .clock {
-      font-size: 5.5rem;
+      font-size: 5rem;
       font-weight: 200;
       letter-spacing: -0.03em;
       line-height: 1;
@@ -155,10 +157,10 @@
     }
 
     .greeting {
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 400;
       color: var(--text-muted);
-      margin-top: 10px;
+      margin-top: 6px;
     }
 
     /* BARRA DE BÚSQUEDA */
@@ -185,8 +187,8 @@
 
     .search-input {
       width: 100%;
-      padding: 16px 60px 16px 52px;
-      font-size: 1rem;
+      padding: 14px 60px 14px 52px;
+      font-size: 0.98rem;
       font-weight: 400;
       color: var(--text-main);
       background: var(--glass-bg);
@@ -221,12 +223,12 @@
       pointer-events: none;
     }
 
-    /* FAVORITOS DE TEXTO ELEGANTE */
+    /* FAVORITOS GENERALES */
     .favorites-grid {
       width: 100%;
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
     }
 
@@ -234,7 +236,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 22px;
+      padding: 10px 20px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 14px;
@@ -252,17 +254,85 @@
     }
 
     .fav-title {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 500;
       letter-spacing: 0.02em;
       color: var(--text-main);
       white-space: nowrap;
     }
 
-    /* COLUMNA DE IA AL BORDE DERECHO (POSICIONAMIENTO ABSOLUTO) */
+    /* SEPARADOR */
+    .divider {
+      width: 80%;
+      height: 1px;
+      background: var(--glass-border);
+      margin: 4px 0;
+    }
+
+    /* SECCIÓN GOOGLE DRIVE */
+    .drive-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drive-section-title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drive-grid {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .drive-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      text-decoration: none;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .drive-card:hover {
+      background: var(--card-hover);
+      border-color: var(--drive-accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .drive-icon {
+      font-size: 0.9rem;
+    }
+
+    .drive-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+    }
+
+    /* COLUMNA DERECHA (IA) */
     .ai-sidebar {
       position: absolute;
       right: 12px;
+      top: 25px;
       width: 170px;
       display: flex;
       flex-direction: column;
@@ -337,7 +407,9 @@
 
     .modal-window {
       width: 90%;
-      max-width: 480px;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
       background: var(--modal-bg);
       border: 1px solid var(--glass-border);
       border-radius: 20px;
@@ -373,10 +445,10 @@
     }
 
     .section-subtitle {
-      font-size: 0.85rem;
+      font-size: 0.82rem;
       font-weight: 600;
       color: var(--text-muted);
-      margin: 14px 0 8px 0;
+      margin: 16px 0 8px 0;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
@@ -424,7 +496,7 @@
     }
 
     .modal-fav-list {
-      max-height: 130px;
+      max-height: 110px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -461,11 +533,13 @@
       z-index: 10;
     }
 
-    /* ADAPTACIÓN PANTALLAS PEQUEÑAS */
+    /* RESPONSIVO */
     @media (max-width: 1024px) {
       .app-layout {
         flex-direction: column;
+        align-items: center;
         gap: 24px;
+        padding-top: 10px;
       }
       .ai-sidebar {
         position: static;
@@ -494,7 +568,7 @@
 
   <!-- ESTRUCTURA PRINCIPAL -->
   <div class="app-layout">
-    <!-- CONTENIDO CENTRAL (SIEMPRE CENTRADO) -->
+    <!-- CONTENIDO CENTRAL -->
     <main>
       <div class="clock-container">
         <div class="clock" id="clock">00:00</div>
@@ -514,11 +588,22 @@
         </form>
       </div>
 
-      <!-- GRILLA FAVORITOS -->
+      <!-- FAVORITOS GENERALES -->
       <div class="favorites-grid" id="favoritesGrid"></div>
+
+      <!-- LÍNEA DIVISORIA -->
+      <div class="divider"></div>
+
+      <!-- ARCHIVOS DE DRIVE -->
+      <div class="drive-section">
+        <div class="drive-section-title">
+          <span>📁</span> Archivos de Drive
+        </div>
+        <div class="drive-grid" id="driveGrid"></div>
+      </div>
     </main>
 
-    <!-- COLUMNA LATERAL DERECHA EN EL BORDE -->
+    <!-- COLUMNA DERECHA (IA) -->
     <aside class="ai-sidebar">
       <div class="ai-sidebar-title">Modelos IA</div>
       <div id="aiSidebarList" style="display: flex; flex-direction: column; gap: 4px; width: 100%;"></div>
@@ -535,16 +620,16 @@
         <button class="close-btn" id="closeSettings">&times;</button>
       </div>
 
-      <!-- SECCIÓN IA -->
-      <div class="section-subtitle">Modelos IA (Columna Derecha)</div>
-      <form class="modal-form" id="addAiForm">
+      <!-- SECCIÓN GOOGLE DRIVE -->
+      <div class="section-subtitle">Archivos / Carpetas de Drive</div>
+      <form class="modal-form" id="addDriveForm">
         <div class="modal-row">
-          <input type="text" id="aiName" class="modal-input" placeholder="Nombre (ej. Perplexity)" required>
-          <input type="url" id="aiUrl" class="modal-input" placeholder="URL (ej. https://...)" required>
+          <input type="text" id="driveName" class="modal-input" placeholder="Nombre (ej. Documentos)" required>
+          <input type="url" id="driveUrl" class="modal-input" placeholder="URL del archivo/carpeta" required>
         </div>
-        <button type="submit" class="btn-primary">Añadir IA</button>
+        <button type="submit" class="btn-primary">Añadir a Drive</button>
       </form>
-      <div class="modal-fav-list" id="modalAiList"></div>
+      <div class="modal-fav-list" id="modalDriveList"></div>
 
       <!-- SECCIÓN FAVORITOS -->
       <div class="section-subtitle">Páginas Favoritas</div>
@@ -556,6 +641,17 @@
         <button type="submit" class="btn-primary">Añadir Favorito</button>
       </form>
       <div class="modal-fav-list" id="modalFavList"></div>
+
+      <!-- SECCIÓN IA -->
+      <div class="section-subtitle">Modelos IA (Columna Derecha)</div>
+      <form class="modal-form" id="addAiForm">
+        <div class="modal-row">
+          <input type="text" id="aiName" class="modal-input" placeholder="Nombre (ej. Perplexity)" required>
+          <input type="url" id="aiUrl" class="modal-input" placeholder="URL (ej. https://...)" required>
+        </div>
+        <button type="submit" class="btn-primary">Añadir IA</button>
+      </form>
+      <div class="modal-fav-list" id="modalAiList"></div>
 
     </div>
   </div>
@@ -572,14 +668,19 @@
     ];
 
     const defaultFavorites = [
-      { name: 'Google', url: 'https://www.google.com' },
       { name: 'Gmail', url: 'https://mail.google.com' },
       { name: 'YouTube', url: 'https://www.youtube.com' },
-      { name: 'GitHub', url: 'https://github.com' }
+      { name: 'GitHub', url: 'https://github.com' },
+      { name: 'Drive', url: 'https://drive.google.com' }
+    ];
+
+    const defaultDriveLinks = [
+      { name: 'Mi Unidad', url: 'https://drive.google.com/drive/my-drive' }
     ];
 
     let aiTools = JSON.parse(localStorage.getItem('mac_ai_tools')) || defaultAiTools;
     let favorites = JSON.parse(localStorage.getItem('mac_text_favs')) || defaultFavorites;
+    let driveLinks = JSON.parse(localStorage.getItem('mac_drive_links')) || defaultDriveLinks;
 
     // RELOJ Y FECHA
     function updateClock() {
@@ -634,7 +735,7 @@
       renderAiBar();
     }
 
-    // RENDERIZAR FAVORITOS
+    // RENDERIZAR FAVORITOS GENERALES
     function renderFavorites() {
       const grid = document.getElementById('favoritesGrid');
       const modalList = document.getElementById('modalFavList');
@@ -668,6 +769,68 @@
       renderFavorites();
     }
 
+    // RENDERIZAR ENLACES DE DRIVE
+    function renderDriveLinks() {
+      const grid = document.getElementById('driveGrid');
+      const modalList = document.getElementById('modalDriveList');
+
+      grid.innerHTML = '';
+      modalList.innerHTML = '';
+
+      driveLinks.forEach((drive, index) => {
+        const card = document.createElement('a');
+        card.className = 'drive-card';
+        card.href = drive.url;
+        card.innerHTML = `<span class="drive-icon">📄</span><span class="drive-title">${drive.name}</span>`;
+        grid.appendChild(card);
+
+        const item = document.createElement('div');
+        item.className = 'modal-fav-item';
+        item.innerHTML = `
+          <div class="modal-fav-info">
+            <span>📄 ${drive.name}</span>
+          </div>
+          <button class="delete-btn" onclick="removeDriveLink(${index})">&times;</button>
+        `;
+        modalList.appendChild(item);
+      });
+
+      localStorage.setItem('mac_drive_links', JSON.stringify(driveLinks));
+    }
+
+    function removeDriveLink(index) {
+      driveLinks.splice(index, 1);
+      renderDriveLinks();
+    }
+
+    // FORMULARIO DRIVE
+    document.getElementById('addDriveForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('driveName').value.trim();
+      let url = document.getElementById('driveUrl').value.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+
+      driveLinks.push({ name, url });
+      renderDriveLinks();
+
+      document.getElementById('driveName').value = '';
+      document.getElementById('driveUrl').value = '';
+    });
+
+    // FORMULARIO FAVORITOS
+    document.getElementById('addFavForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('favName').value.trim();
+      let url = document.getElementById('favUrl').value.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
+
+      favorites.push({ name, url });
+      renderFavorites();
+
+      document.getElementById('favName').value = '';
+      document.getElementById('favUrl').value = '';
+    });
+
     // FORMULARIO IA
     document.getElementById('addAiForm').addEventListener('submit', (e) => {
       e.preventDefault();
@@ -680,20 +843,6 @@
 
       document.getElementById('aiName').value = '';
       document.getElementById('aiUrl').value = '';
-    });
-
-    // FORMULARIO FAVORITO
-    document.getElementById('addFavForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const name = document.getElementById('favName').value.trim();
-      let url = document.getElementById('favUrl').value.trim();
-      if (!url.startsWith('http://') && !url.startsWith('https://')) url = 'https://' + url;
-
-      favorites.push({ name, url });
-      renderFavorites();
-
-      document.getElementById('favName').value = '';
-      document.getElementById('favUrl').value = '';
     });
 
     // BUSCADOR
@@ -727,6 +876,7 @@
     // INICIALIZAR
     renderAiBar();
     renderFavorites();
+    renderDriveLinks();
   </script>
 </body>
 </html>
