@@ -117,67 +117,25 @@
       fill: currentColor;
     }
 
-    /* BARRA SUPERIOR DE IA (AI NAVBAR) */
-    .ai-bar-wrapper {
+    /* CONTENEDOR PRINCIPAL CON COLUMNA DERECHA */
+    .app-layout {
       width: 100%;
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-    }
-
-    .ai-bar {
+      max-width: 1100px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      padding: 6px 10px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 30px;
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
-      box-shadow: var(--shadow-mac);
-      max-width: 100%;
-      overflow-x: auto;
-      scrollbar-width: none;
+      justify-content: space-between;
+      gap: 40px;
+      margin: auto 0;
     }
 
-    .ai-bar::-webkit-scrollbar {
-      display: none;
-    }
-
-    .ai-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-main);
-      text-decoration: none;
-      background: transparent;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-    }
-
-    .ai-chip:hover {
-      background: var(--glass-hover);
-      transform: translateY(-1px);
-    }
-
-    .ai-chip span {
-      font-size: 0.95rem;
-    }
-
-    /* CONTENEDOR PRINCIPAL */
+    /* SECCIÓN CENTRAL */
     main {
-      width: 100%;
-      max-width: 720px;
+      flex: 1;
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 32px;
-      margin-top: -10px;
+      max-width: 720px;
     }
 
     /* RELOJ Y SALUDO */
@@ -299,6 +257,55 @@
       white-space: nowrap;
     }
 
+    /* COLUMNA LATERAL DERECHA (HERRAMIENTAS DE IA) */
+    .ai-sidebar {
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 14px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      box-shadow: var(--shadow-mac);
+    }
+
+    .ai-sidebar-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      padding-left: 6px;
+    }
+
+    .ai-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      text-decoration: none;
+      background: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .ai-chip:hover {
+      background: var(--glass-hover);
+      transform: translateX(3px);
+    }
+
+    .ai-chip span {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
     /* MODAL DE CONFIGURACIÓN */
     .modal-backdrop {
       position: fixed;
@@ -412,7 +419,7 @@
     }
 
     .modal-fav-list {
-      max-height: 140px;
+      max-height: 130px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -446,7 +453,23 @@
     footer {
       font-size: 0.75rem;
       color: var(--text-subtle);
-      margin-top: 10px;
+    }
+
+    /* ADAPTACIÓN PANTALLAS PEQUEÑAS */
+    @media (max-width: 820px) {
+      .app-layout {
+        flex-direction: column;
+        gap: 30px;
+      }
+      .ai-sidebar {
+        width: 100%;
+        max-width: 720px;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+      .ai-sidebar-title {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -462,34 +485,38 @@
     </button>
   </header>
 
-  <!-- BARRA SUPERIOR DE IA -->
-  <div class="ai-bar-wrapper">
-    <nav class="ai-bar" id="aiBar"></nav>
+  <!-- ESTRUCTURA PRINCIPAL -->
+  <div class="app-layout">
+    <!-- CONTENIDO CENTRAL -->
+    <main>
+      <div class="clock-container">
+        <div class="clock" id="clock">00:00</div>
+        <div class="greeting" id="greeting">Hola</div>
+      </div>
+
+      <!-- BUSCADOR -->
+      <div class="search-box">
+        <form id="searchForm">
+          <div class="search-input-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24">
+              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
+            </svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Buscar en Google o escribir URL..." autocomplete="off" autofocus>
+            <span class="kbd-hint">/</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- GRILLA FAVORITOS -->
+      <div class="favorites-grid" id="favoritesGrid"></div>
+    </main>
+
+    <!-- COLUMNA LATERAL DERECHA (IA) -->
+    <aside class="ai-sidebar">
+      <div class="ai-sidebar-title">Modelos IA</div>
+      <div id="aiSidebarList" style="display: flex; flex-direction: column; gap: 4px; width: 100%;"></div>
+    </aside>
   </div>
-
-  <!-- CONTENIDO CENTRAL -->
-  <main>
-    <div class="clock-container">
-      <div class="clock" id="clock">00:00</div>
-      <div class="greeting" id="greeting">Hola</div>
-    </div>
-
-    <!-- BUSCADOR -->
-    <div class="search-box">
-      <form id="searchForm">
-        <div class="search-input-wrapper">
-          <svg class="search-icon" viewBox="0 0 24 24">
-            <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-          </svg>
-          <input type="text" id="searchInput" class="search-input" placeholder="Buscar en Google o escribir URL..." autocomplete="off" autofocus>
-          <span class="kbd-hint">/</span>
-        </div>
-      </form>
-    </div>
-
-    <!-- GRILLA FAVORITOS -->
-    <div class="favorites-grid" id="favoritesGrid"></div>
-  </main>
 
   <footer>macOS Minimal Startpage</footer>
 
@@ -501,8 +528,8 @@
         <button class="close-btn" id="closeSettings">&times;</button>
       </div>
 
-      <!-- SECCIÓN HERRAMIENTAS DE IA -->
-      <div class="section-subtitle">Herramientas IA (Barra Superior)</div>
+      <!-- SECCIÓN IA -->
+      <div class="section-subtitle">Modelos IA (Columna Derecha)</div>
       <form class="modal-form" id="addAiForm">
         <div class="modal-row">
           <input type="text" id="aiName" class="modal-input" placeholder="Nombre (ej. Perplexity)" required>
@@ -512,7 +539,7 @@
       </form>
       <div class="modal-fav-list" id="modalAiList"></div>
 
-      <!-- SECCIÓN FAVORITOS GENERALES -->
+      <!-- SECCIÓN FAVORITOS -->
       <div class="section-subtitle">Páginas Favoritas</div>
       <form class="modal-form" id="addFavForm">
         <div class="modal-row">
@@ -527,7 +554,6 @@
   </div>
 
   <script>
-    // IA PREDETERMINADAS
     const defaultAiTools = [
       { name: 'ChatGPT', url: 'https://chatgpt.com', symbol: '✦' },
       { name: 'Gemini', url: 'https://gemini.google.com', symbol: '✧' },
@@ -538,7 +564,6 @@
       { name: 'Copilot', url: 'https://copilot.microsoft.com', symbol: '❖' }
     ];
 
-    // FAVORITOS PREDETERMINADOS
     const defaultFavorites = [
       { name: 'Google', url: 'https://www.google.com' },
       { name: 'Gmail', url: 'https://mail.google.com' },
@@ -568,23 +593,23 @@
     setInterval(updateClock, 1000);
     updateClock();
 
-    // RENDERIZAR BARRA DE IA
+    // RENDERIZAR IA (COLUMNA DERECHA)
     function renderAiBar() {
-      const aiBar = document.getElementById('aiBar');
+      const aiList = document.getElementById('aiSidebarList');
       const modalAiList = document.getElementById('modalAiList');
 
-      aiBar.innerHTML = '';
+      aiList.innerHTML = '';
       modalAiList.innerHTML = '';
 
       aiTools.forEach((ai, index) => {
-        // Píldora en la barra superior
+        // Opción columna
         const chip = document.createElement('a');
         chip.className = 'ai-chip';
         chip.href = ai.url;
         chip.innerHTML = `<span>${ai.symbol || '✦'}</span> ${ai.name}`;
-        aiBar.appendChild(chip);
+        aiList.appendChild(chip);
 
-        // Item en el modal
+        // Modal
         const item = document.createElement('div');
         item.className = 'modal-fav-item';
         item.innerHTML = `
@@ -638,7 +663,7 @@
       renderFavorites();
     }
 
-    // FORMULARIO AGREGAR IA
+    // FORMULARIO IA
     document.getElementById('addAiForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('aiName').value.trim();
@@ -652,7 +677,7 @@
       document.getElementById('aiUrl').value = '';
     });
 
-    // FORMULARIO AGREGAR FAVORITO
+    // FORMULARIO FAVORITO
     document.getElementById('addFavForm').addEventListener('submit', (e) => {
       e.preventDefault();
       const name = document.getElementById('favName').value.trim();
